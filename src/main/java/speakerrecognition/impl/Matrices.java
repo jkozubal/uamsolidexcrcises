@@ -1,8 +1,8 @@
 package speakerrecognition.impl;
 
 
-public final class Matrixes {
-	
+public final class Matrices {
+	//przejrzec
 	public static double[] row_mul(double[] x, double y) {
 		double[] temp = new double[x.length];
 		for(int i=0;i<x.length;i++){
@@ -73,7 +73,7 @@ public final class Matrixes {
 	public static double[][] multiplyMatrixesElByEl(double[][] m1, double[][] m2) throws MyException {
 		
 		if(m1.length!=m2.length || m1[0].length!=m2[0].length){
-			//System.out.println("Matrixes must have equal dimensions");
+			//System.out.println("Matrices must have equal dimensions");
 			//return null;
 			throw new MyException("While multiplying matrixex element by element, they must have equal dimmensions, while it is ["+Integer.toString(m1.length)+"]["+Integer.toString(m1[0].length)+"] and ["+Integer.toString(m2.length)+"]["+Integer.toString(m2[0].length)+"].");
 		}
@@ -282,7 +282,7 @@ public final class Matrixes {
 	public static double[][] addMatrixes(double[][]x, double[][]y) throws MyException{
 		
 		if(x.length!=y.length || x[0].length!=y[0].length){
-			//System.out.println("Matrixes must have equal dimensions");
+			//System.out.println("Matrices must have equal dimensions");
 			//return null;
 			throw new MyException("While adding matrixes element by element, they must have equal dimmensions, while it is ["+Integer.toString(x.length)+"]["+Integer.toString(x[0].length)+"] and ["+Integer.toString(y.length)+"]["+Integer.toString(y[0].length)+"].");
 		}
@@ -298,7 +298,7 @@ public final class Matrixes {
 	public static double[][] substractMatrixes(double[][]x, double[][]y) throws MyException{
 		
 		if(x.length!=y.length || x[0].length!=y[0].length){
-			//System.out.println("Matrixes must have equal dimensions");
+			//System.out.println("Matrices must have equal dimensions");
 			//return null;
 			throw new MyException("While substracting matrixes element by element, they must have equal dimmensions, while it is ["+Integer.toString(x.length)+"]["+Integer.toString(x[0].length)+"] and ["+Integer.toString(y.length)+"]["+Integer.toString(y[0].length)+"].");
 		}
@@ -359,7 +359,7 @@ public final class Matrixes {
 	public static double[][] sum(double[][]x, double[][]y) throws MyException{
 		
 		if(x.length!=y.length || x[0].length!=y[0].length){
-			//System.out.println("Matrixes must have equal dimensions");
+			//System.out.println("Matrices must have equal dimensions");
 			//return null;
 			throw new MyException("While adding matrixes element by element, they must have equal dimmensions, while it is ["+Integer.toString(x.length)+"]["+Integer.toString(x[0].length)+"] and ["+Integer.toString(y.length)+"]["+Integer.toString(y[0].length)+"].");
 		}
@@ -478,10 +478,10 @@ public final class Matrixes {
 		
 		try{
 			double XX = einsum(x);
-			distances = Matrixes.multiplyByMatrix(y, x);
-			distances = Matrixes.row_mul(distances, -2);
-			distances = Matrixes.addValue(distances,  XX);
-			distances = Matrixes.addMatrixes(distances, z);
+			distances = Matrices.multiplyByMatrix(y, x);
+			distances = Matrices.row_mul(distances, -2);
+			distances = Matrices.addValue(distances,  XX);
+			distances = Matrices.addMatrixes(distances, z);
 		}
 		catch(Exception myEx)
         {
@@ -498,10 +498,10 @@ public final class Matrixes {
 		double[] XX = null;
 		try{
 			XX = einsum(x);
-			distances = Matrixes.multiplyByMatrix(x, Matrixes.transpose(y));
-			distances = Matrixes.row_mul(distances, -2);
-			distances = Matrixes.addValue(distances, XX);
-			distances = Matrixes.addValue(distances, z);
+			distances = Matrices.multiplyByMatrix(x, Matrices.transpose(y));
+			distances = Matrices.row_mul(distances, -2);
+			distances = Matrices.addValue(distances, XX);
+			distances = Matrices.addValue(distances, z);
 		}
 		catch(Exception myEx)
         {
@@ -518,16 +518,16 @@ public final class Matrixes {
 		double[] X_mean = null;
 		
 		try{
-			temp = Matrixes.copy2dArray(x);
+			temp = Matrices.copy2dArray(x);
 			//////////substracting mean //////////////
-			X_mean = Statistics.getMean(Matrixes.transpose(x));
+			X_mean = Statistics.getMean(Matrices.transpose(x));
 			for(int j=0;j<x[0].length;j++){
 				for(int i=0; i<x.length; i++){
 					temp[i][j] -= X_mean[i];
 				}
 			}
 			
-			temp = Matrixes.divideByValue(Matrixes.multiplyByMatrix(x, Matrixes.transpose(temp)), (double)x[0].length-1);
+			temp = Matrices.divideByValue(Matrices.multiplyByMatrix(x, Matrices.transpose(temp)), (double)x[0].length-1);
 		}
 		catch(Exception myEx)
         {
@@ -612,7 +612,7 @@ public final class Matrixes {
 		//a[0][0]/b[0][0] ,  a[m][n]/b[m][n] ...
 		
 		if(x.length!=y.length || x[0].length!=y[0].length){
-			//System.out.println("Matrixes must have equal dimensions");
+			//System.out.println("Matrices must have equal dimensions");
 			//return null;
 			throw new MyException("While dividing element by element, they must have equal dimmensions, now it is ["+Integer.toString(x.length)+"]["+Integer.toString(x[0].length)+"] and ["+Integer.toString(y.length)+"]["+Integer.toString(y[0].length)+"].");
 		}
@@ -644,10 +644,10 @@ public final class Matrixes {
 		
 		double[] out = null;
 		try{
-			double[][] temp = Matrixes.transpose(data);
-			double[] vmax = Matrixes.max(temp, 0);
-			out = Matrixes.makeLog(Matrixes.sum(Matrixes.exp(Matrixes.substractValue(temp, vmax)), 0));
-			out = Matrixes.addMatrixes(out, vmax);
+			double[][] temp = Matrices.transpose(data);
+			double[] vmax = Matrices.max(temp, 0);
+			out = Matrices.makeLog(Matrices.sum(Matrices.exp(Matrices.substractValue(temp, vmax)), 0));
+			out = Matrices.addMatrixes(out, vmax);
 			}
 		catch(Exception myEx)
         {

@@ -30,7 +30,7 @@ public class MFCC {
 		this.frame_shift = setFrameShift(fs);
 		window = hamming(frame_len);
 		
-		//this.melfb_coeffs = melfb(melfilter_bands, 256, fs); //!!!!!!!!!!!!!!!! USUN¥Æ !!!!!!!!!!!!!!!!!
+		//this.melfb_coeffs = melfb(melfilter_bands, 256, fs); //!!!!!!!!!!!!!!!! USUNï¿½ï¿½ !!!!!!!!!!!!!!!!!
 		this.melfb_coeffs = melfb(melfilter_bands, fft_size, fs);
 		
 		this.D1 = dctmatrix(melfilter_bands);
@@ -59,7 +59,7 @@ public class MFCC {
 ////////////////////////////////////////////////////////////////
 
 //////// getters for MFCC results/////////////////////////////
-	double[][] getMFCC(){
+public double[][] getMFCC(){
 		extract_MFCC();
 		return this.mfcc_coeffs;
 	}
@@ -131,11 +131,11 @@ public class MFCC {
 				temp_row[i] = i;
 			else{
 				while(row_energy>1.01){
-					temp_row = Matrixes.row_mul(temp_row, 0.99);
+					temp_row = Matrices.row_mul(temp_row, 0.99);
 					row_energy = energy(temp_row);
 				}
 				while(row_energy<0.99){
-					temp_row = Matrixes.row_mul(temp_row, 1.01);
+					temp_row = Matrices.row_mul(temp_row, 1.01);
 					row_energy = energy(temp_row);
 				}
 			}
@@ -170,7 +170,7 @@ public class MFCC {
 				}
 				
 				try{
-					frame = Matrixes.row_mul(frame, window);
+					frame = Matrices.row_mul(frame, window);
 				
 					frame = preemphasis(frame);
 					System.arraycopy(frame, 0, fft1, 0, this.frame_len);
@@ -185,12 +185,12 @@ public class MFCC {
 						if(fft_final[k]<power_spectrum_floor) fft_final[k]=power_spectrum_floor;
 					}
 					
-					double[] dot_prod = Matrixes.multiplyByMatrix(this.melfb_coeffs, fft_final);
+					double[] dot_prod = Matrices.multiplyByMatrix(this.melfb_coeffs, fft_final);
 					for(int j=0;j<dot_prod.length;j++){
 						dot_prod[j] = Math.log(dot_prod[j]);
 					}
 					//double[][]D1 = dctmatrix(melfilter_bands);
-					dot_prod = Matrixes.multiplyByMatrix(this.D1, dot_prod);
+					dot_prod = Matrices.multiplyByMatrix(this.D1, dot_prod);
 					this.mfcc_coeffs[i] = dot_prod;
 				}
 				catch(Exception myEx)
@@ -244,8 +244,8 @@ public class MFCC {
 
 	private double[][] dctmatrix(int n){
 		double[][] d1 = new double[n][n];
-		double[][] x = Matrixes.meshgrid_ox(n);
-		double[][] y = Matrixes.meshgrid_oy(n);
+		double[][] x = Matrices.meshgrid_ox(n);
+		double[][] y = Matrices.meshgrid_oy(n);
 		for(int i=0;i<n;i++){
 			for(int j=0;j<n;j++){
 				x[i][j] = (x[i][j]*2+1)*Math.PI/(2*n);
@@ -253,7 +253,7 @@ public class MFCC {
 		}
 		
 		try{
-			d1 = Matrixes.multiplyMatrixesElByEl(x, y);
+			d1 = Matrices.multiplyMatrixesElByEl(x, y);
 		}
 		catch(Exception myEx)
         {

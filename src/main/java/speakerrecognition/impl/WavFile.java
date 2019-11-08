@@ -14,29 +14,26 @@ public class WavFile {
 	private Path file_path;
 	private int samples_num;
 	private int channels_num;
-	
-	
-	
-	
+
 	
 	///////////////// constructor /////////////////////////////////////////////
-	WavFile(String x){
+	public WavFile(String x){
  		this.file_path = Paths.get(x);
 	}
 	
     /////////////////////////////////////////////////////////////////////////////////////////
 	
-	int[] getSamples(){
+	public int[] getSamples(){
 		return this.samples;
 	}
 	
-	int getFs(){
+	public int getFs(){
 		return this.fs;
 	}
 	
 	///////////// read samples from mono vaw ///////////////////////////////////////////////////
 	
-	void open() throws IOException, MyException{
+	public void open() throws IOException {
 		
 		RandomAccessFile in = null;
 		try{
